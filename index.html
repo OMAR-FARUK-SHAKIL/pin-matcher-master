@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pin Generator</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-6">
+                <div class="pin-generator half-width">
+                    <input id="random" class="form-control" type="text">
+                    <button onclick=getRandomValue() class="generate-btn">Generate Pin</button>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="input-section half-width">
+                    <input id="monitor" class="form-control" type="text">
+                    <div class="numbers">
+                        <div class="calc-body">
+                            <div class="calc-button-row">
+                                <div onclick=Value(7) id="value7" class="button">7</div>
+                                <div onclick=Value(8) id="value8" class="button">8</div>
+                                <div onclick=Value(9) id="value9" class="button">9</div>
+                            </div>
+                            <div class="calc-button-row">
+                                <div onclick=Value(4) id="value4" class="button">4</div>
+                                <div onclick=Value(5) id="value5" class="button">5</div>
+                                <div onclick=Value(6) id="value6" class="button">6</div>
+                            </div>
+                            <div class="calc-button-row">
+                                <div onclick=Value(1) id="value1" class="button">1</div>
+                                <div onclick=Value(2) id="value2" class="button">2</div>
+                                <div onclick=Value(3) id="value3" class="button">3</div>
+                            </div>
+                            <div class="calc-button-row">
+                                    <div class="button"> < </div> 
+                                    <div onclick=Value(0) id="value0" class="button">0</div>
+                                    <div class="button">C</div>
+                                </div>
+                                <div>
+                                    <button onclick=matcher() id="submit-id" type="submit" class="submit-btn">Submit</button>
+                                    <p class="action-left">3 try left</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="notify-section">
+                    <p id="notify1" class="notify">❌ Pin Didn't Match, Please try again</p>
+                    <p id="notify2" class="notify">✅ Pin Matched... Secret door is opening for you</p>
+                </div>
+            </div>
+
+            <script>
+                function Value(number){
+                   let num = document.getElementById('value'+number);
+                   //let intValue = parseInt(num.innerText);
+                   document.getElementById("monitor").value = document.getElementById("monitor").value + num.innerText;
+                }
+                //document.getElementById("generator-id").addEventListener("click",console.log('hello everyone'));
+                function getRandomValue() {
+                    let rand = Math.ceil(Math.random() * 10000) + '';
+                    if(rand.length!=4){
+                        rand = Math.ceil(Math.random() * 10000) + '';
+                        //getRandomValue();
+                        //console.log(rand.length);
+                    }
+                    //console.log(rand.length);
+                    document.getElementById("random").value = rand;}
+                    // document.getElementById("random").innerText = rand;
+                    // document.getElementById("random").innerHTML = rand;
+                // })
+                // console.log( 'input: ',document.getElementById("random").value);
+
+                //matching function
+                function matcher(){
+                    let randomNumber = document.getElementById("random").innerText;
+                    let monitorNumber = document.getElementById("monitor").innerText;
+                    if (randomNumber.length != monitorNumber.length) {
+                        document.getElementById("notify1").style.display='block';
+                        return;
+                    }
+                    if(randomNumber[0]==monitorNumber[0] 
+                    &&randomNumber[1] == monitorNumber[1] &&
+                    randomNumber[2] == monitorNumber[2] &&
+                    randomNumber[3]== monitorNumber[3]){
+
+                        document.getElementById("notify2").style.display='block';
+                        document.getElementById("monitor").value =''; 
+                    }
+                    else{
+                        document.getElementById("notify1").style.display='block';
+                    }
+                }
+            </script>
+</body>
+
+</html>
